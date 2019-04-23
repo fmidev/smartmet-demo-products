@@ -96,7 +96,7 @@ fmi.weather = fmi.weather || {};
     getLegend = function (name) {
         var div = document.getElementById('legend-container')
         div.innerHTML = ''
-        $.getJSON( "../legend.php?server="+mapconfigurations.wmsserver+"&layer="+name, function( data ) {
+        $.getJSON( "legend.php?server="+mapconfigurations.wmsserver+"&layer="+name, function( data ) {
             weatherMap.debug(data)
             weatherMap.debug('Add legend')
             var img = document.createElement("img")
