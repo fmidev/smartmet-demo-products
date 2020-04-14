@@ -208,85 +208,85 @@ fmi.weather = fmi.weather || {};
     }
 
     weatherGraph.resolveWeatherSymbol3Text = function(value) {
-        if (value=="1") {
+        if (value==="1" || value===1) {
             return "clear weather";
         }
-        if (value=="2") {
+        if (value==="2" || value===2) {
             return "partly cloudy";
         }
-        if (value=="3") {
+        if (value==="3" || value===3) {
             return "cloudy";
         }
-        if (value=="21") {
+        if (value==="21" || value===21) {
             return "light showers";     
         }
-        if (value=="22") {
+        if (value==="22" || value===22) {
             return "showers";
         }
-        if (value=="23") {
+        if (value==="23" || value===23) {
             return "heavy showers";
         }
-        if (value=="31") {
+        if (value==="31" || value===31) {
             return "light rain";
         }
-        if (value=="32") {
+        if (value==="32" || value===32) {
             return "rain";
         }
-        if (value=="33") {
+        if (value==="33" || value===33) {
             return "heavy rain";
         }
-        if (value=="41") {
+        if (value==="41" || value===41) {
             return "light snow showers";
         }
-        if (value=="42") {
+        if (value==="42" || value===42) {
             return "snow showers";
         }
-        if (value=="43") {
+        if (value==="43" || value===43) {
             return "heavy snow showers";
         }
-        if (value=="51") {
+        if (value==="51" || value===51) {
             return "light snowfall";
         }
-        if (value=="52") {
+        if (value==="52" || value===52) {
             return "snowfall";           
         }
-        if (value=="53") {
+        if (value==="53" || value===53) {
             return "heavy snowfall";
         }
-        if (value=="61") {
+        if (value==="61" || value===61) {
             return "thundershowers";
         }
-        if (value=="62") {
+        if (value==="62" || value===62) {
             return "heavy thundershowers";
         }
-        if (value=="63") {
+        if (value==="63" || value===63) {
             return "thunder";
         }
-        if (value=="64") {
+        if (value==="64" || value===64) {
             return "heavy thunder";
         }
-        if (value=="71") {
+        if (value==="71" || value===71) {
             return "light sleet showers";
         }
-        if (value=="72") {
+        if (value==="72" || value===72) {
             return "sleet showers";
         }
-        if (value=="73") {
+        if (value==="73" || value===73) {
             return "heavy sleet showers";
         }
-        if (value=="81") {
+        if (value==="81" || value===81) {
             return "light sleet";
         }
-        if (value=="82") {
+        if (value==="82" || value===82) {
             return "sleet";
         }
-        if (value=="83") {
+        if (value==="83" || value===83) {
             return "heavy sleet";
         }
-        if (value=="91") {
+        if (value==="91" || value===91) {
             return "moderate fog";
         }
-        if (value=="92") {
+        if (value==="92" || value===92) {
             return "heavy fog";
         }     
 
