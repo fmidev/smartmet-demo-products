@@ -11,7 +11,7 @@ L.TimeDimension.Layer.GeoJson = L.TimeDimension.Layer.extend({
         this._duration = this.options.duration || null;
         this._addlastPoint = this.options.addlastPoint || false;
         this._waitForReady = this.options.waitForReady || false;
-        this._defaultTime = 0;
+        this._updateCurrentTime = this.options.updateCurrentTime || this._updateTimeDimension;        
         this._availableTimes = [];
         this._loaded = false;
         if (this._baseLayer.getLayers().length == 0) {
@@ -112,8 +112,12 @@ L.TimeDimension.Layer.GeoJson = L.TimeDimension.Layer.extend({
             }
         }
         this._availableTimes = L.TimeDimension.Util.sort_and_deduplicate(times);
+        this._updateCurrentTime = this._updateCurrentTime || (this._timeDimension && this._timeDimension.getAvailableTimes().length == 0);
         if (this._timeDimension && (this._updateTimeDimension || this._timeDimension.getAvailableTimes().length == 0)) {
             this._timeDimension.setAvailableTimes(this._availableTimes, this._updateTimeDimensionMode);
+        }
+        if (this._updateCurrentTime && this._timeDimension && this._availableTimes.length) {
+            this._timeDimension.setCurrentTime(this._availableTimes[0]);
         }
     },
 
@@ -158,10 +162,10 @@ L.TimeDimension.Layer.GeoJson = L.TimeDimension.Layer.extend({
             return null;
         }
 
-        if (featureTimes[l - 1] > minTime) {
+        if (featureTimes[l - 1] >= minTime) {
             for (var i = 0; i < l; i++) {
-                if (index_min === null && featureTimes[i] > minTime) {
-                    // set index_min the first time that current time is greater the minTime
+                if (index_min === null && featureTimes[i] >= minTime) {
+                    // set index_min the first time that current time is greater or equal to the minTime
                     index_min = i;
                 }
                 if (featureTimes[i] > maxTime) {

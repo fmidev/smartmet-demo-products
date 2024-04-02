@@ -55,7 +55,7 @@ L.TimeDimension.Player = (L.Layer || L.Class).extend({
             // If the player was waiting, check if all times are loaded
             if (this._waitingForBuffer) {
                 if (numberNextTimesReady < buffer) {
-                    fmi.weather.weatherMap.debug('Waiting until buffer is loaded. ' + numberNextTimesReady + ' of ' + buffer + ' loaded');
+                    console.log('Waiting until buffer is loaded. ' + numberNextTimesReady + ' of ' + buffer + ' loaded');
                     this.fire('waiting', {
                         buffer: buffer,
                         available: numberNextTimesReady
@@ -63,14 +63,14 @@ L.TimeDimension.Player = (L.Layer || L.Class).extend({
                     return;
                 } else {
                     // all times loaded
-                    fmi.weather.weatherMap.debug('Buffer is fully loaded!');
+                    console.log('Buffer is fully loaded!');
                     this.fire('running');
                     this._waitingForBuffer = false;
                 }
             } else {
                 // check if player has to stop to wait and force to full all the buffer
                 if (numberNextTimesReady < this._minBufferReady) {
-                    fmi.weather.weatherMap.debug('Force wait for load buffer. ' + numberNextTimesReady + ' of ' + buffer + ' loaded');
+                    console.log('Force wait for load buffer. ' + numberNextTimesReady + ' of ' + buffer + ' loaded');
                     this._waitingForBuffer = true;
                     this._timeDimension.prepareNextTimes(this._steps, buffer, this._loop);
                     this.fire('waiting', {
@@ -97,16 +97,19 @@ L.TimeDimension.Player = (L.Layer || L.Class).extend({
         if (this._intervalID) return;
         this._steps = numSteps || 1;
         this._waitingForBuffer = false;
+        var startedOver = false;
         if (this.options.startOver){
             if (this._timeDimension.getCurrentTimeIndex() === this._getMaxIndex()){
-                 this._timeDimension.setCurrentTimeIndex(this._timeDimension.getLowerLimitIndex() || 0);
+                this._timeDimension.setCurrentTimeIndex(this._timeDimension.getLowerLimitIndex() || 0);
+                startedOver = true;
             }
         }
         this.release();
         this._intervalID = window.setInterval(
             L.bind(this._tick, this),
             this._transitionTime);
-        this._tick();
+        if (!startedOver)
+            this._tick();
         this.fire('play');
         this.fire('running');
     },
