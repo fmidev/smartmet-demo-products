@@ -16,6 +16,7 @@ L.TimeDimension.Layer.WMS = L.TimeDimension.Layer.extend({
         this._updateTimeDimension = this.options.updateTimeDimension || false;
         this._setDefaultTime = this.options.setDefaultTime || false;
         this._updateTimeDimensionMode = this.options.updateTimeDimensionMode || 'intersect'; // 'union' or 'replace'
+        this._period = this.options.period || null;
         this._layers = {};
         this._defaultTime = 0;
         this._availableTimes = [];
@@ -170,13 +171,13 @@ L.TimeDimension.Layer.WMS = L.TimeDimension.Layer.extend({
         }
         this._currentLayer = layer;
         this._currentTime = time;
-        fmi.weather.weatherMap.debug('Show layer ' + layer.wmsParams.layers + ' with time: ' + new Date(time).toISOString());
+        console.log('Show layer ' + layer.wmsParams.layers + ' with time: ' + new Date(time).toISOString());
 
         this._evictCachedTimes(this._timeCacheForward, this._timeCacheBackward);
     },
 
     _getLayerForTime: function(time) {
-        if (time == 0 || time == this._defaultTime || time == null) {
+        if (time == this._defaultTime || time == null) {
             return this._baseLayer;
         }
         if (this._layers.hasOwnProperty(time)) {
@@ -260,11 +261,13 @@ L.TimeDimension.Layer.WMS = L.TimeDimension.Layer.extend({
         var oReq = new XMLHttpRequest();
         oReq.addEventListener("load", (function(xhr) {
             var data = xhr.currentTarget.responseXML;
-            this._defaultTime = Date.parse(this._getDefaultTimeFromCapabilities(data));
-            this._setDefaultTime = this._setDefaultTime || (this._timeDimension && this._timeDimension.getAvailableTimes().length == 0);
-            this.setAvailableTimes(this._parseTimeDimensionFromCapabilities(data));
-            if (this._setDefaultTime && this._timeDimension) {
-                this._timeDimension.setCurrentTime(this._defaultTime);
+            if (data !== null){
+                this._defaultTime = Date.parse(this._getDefaultTimeFromCapabilities(data));
+                this._setDefaultTime = this._setDefaultTime || (this._timeDimension && this._timeDimension.getAvailableTimes().length == 0);
+                this.setAvailableTimes(this._parseTimeDimensionFromCapabilities(data));
+                if (this._setDefaultTime && this._timeDimension) {
+                    this._timeDimension.setCurrentTime(this._defaultTime);
+                }
             }
         }).bind(this));
         oReq.overrideMimeType('application/xml');
@@ -308,14 +311,13 @@ L.TimeDimension.Layer.WMS = L.TimeDimension.Layer.extend({
 
     _getTimesFromLayerCapabilities: function(layer) {
         var times = null;
-        var dimensions = layer.querySelectorAll("Dimension[name='time']");
-        if (dimensions && dimensions.length && dimensions[0].textContent.length) {
-            times = dimensions[0].textContent.trim();
-        } else {
-            var extents = layer.querySelectorAll("Extent[name='time']");
-            if (extents && extents.length && extents[0].textContent.length) {
-                times = extents[0].textContent.trim();
-            }
+        var nodes = layer.children;
+        for (var i=0, l=nodes.length; i<l; i++){
+            if (nodes[i].nodeName !== 'Extent' && nodes[i].nodeName !== 'Dimension') continue;
+            if (nodes[i].getAttribute('name') !== 'time') continue;
+            if (!nodes[i].textContent.length) continue;
+            times = nodes[i].textContent.trim();
+            break;
         }
         return times;
     },
@@ -324,7 +326,6 @@ L.TimeDimension.Layer.WMS = L.TimeDimension.Layer.extend({
         var layers = xml.querySelectorAll('Layer[queryable="1"]');
         var layerName = this._baseLayer.wmsParams.layers;
         var layer = null;
-        var times = null;
 
         layers.forEach(function(current) {
             if (current.querySelector("Name").innerHTML === layerName) {
@@ -344,20 +345,20 @@ L.TimeDimension.Layer.WMS = L.TimeDimension.Layer.extend({
 
     _getDefaultTimeFromLayerCapabilities: function(layer) {
         var defaultTime = 0;
-        var dimensions = layer.querySelectorAll("Dimension[name='time']");
-        if (dimensions && dimensions.length && dimensions[0].attributes.default) {
-            defaultTime = dimensions[0].attributes.default;
-        } else {
-            var extents = layer.querySelectorAll("Extent[name='time']");
-            if (extents && extents.length && extents[0].attributes.default) {
-                defaultTime = extents[0].attributes.default;
-            }
+        var nodes = layer.children;
+        for (var i=0, l=nodes.length; i<l; i++) {
+            if (nodes[i].nodeName !== 'Extent' && nodes[i].nodeName !== 'Dimension') continue;
+            if (nodes[i].getAttribute('name') !== 'time') continue;
+            if (!nodes[i].attributes.default) continue;
+            if (!nodes[i].attributes.default.textContent.length) continue;
+            defaultTime = nodes[i].attributes.default.textContent.trim();
+            break;
         }
         return defaultTime;
     },
 
     setAvailableTimes: function(times) {
-        this._availableTimes = L.TimeDimension.Util.parseTimesExpression(times);
+        this._availableTimes = L.TimeDimension.Util.parseTimesExpression(times, this._period);
         this._updateTimeDimensionAvailableTimes();
     },
 

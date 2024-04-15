@@ -13,7 +13,7 @@ var mapconfigurations = {
   bounds: {north: 72.0, east: 35.0, south: 55.0, west: 20.0},
   // wms layers
   layers: {
-    'ECMWF 2m Temperature': 'fmi:ecmwf:temperature',
+    'ECMWF 2m Temperature': 'fmi:ecmwf:rawtemperature',
     'ECMWF Total Cloud Cover': 'fmi:ecmwf:totalcloudcover'
   },
   wmsOpacity: '0.8',
