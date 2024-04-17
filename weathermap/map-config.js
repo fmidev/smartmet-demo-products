@@ -7,7 +7,7 @@ var now = dd.toISOString()
 
 var mapconfigurations = {
   debug: true, // debug mode for development, messages are printed to console
-  wmsserver: 'http://smartmet.fmi.fi/wms', 
+  wmsserver: 'http://smartmet.fmi.fi/wms', // http://data.fmi.fi/fmi-apikey/API-KEY/wms'
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Finnish Meteorological Institute',
   mapCenter: [60, 25], // lat, lon
   bounds: {north: 72.0, east: 35.0, south: 55.0, west: 20.0},
