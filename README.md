@@ -33,7 +33,7 @@ These are the libraries chosen for this example, but alternative ones can also b
 
 ### Prerequisites
 
-Smartmet server with datasets and a working WMS and Timeseries plugins
+This demo products use SmartMet Server's WMS and Timeseries APIs
 
 ### Installing
 
@@ -45,9 +45,9 @@ git clone https://github.com/fmidev/smartmet-demo-products.git .
 
 go to https://github.com/fmidev/smartmet-demo-products and download zip.
 
-The application needs weather symbols to work, to integrate FMI's smartsymbols, follow these steps:
+The meteogram application needs weather symbols to work, to integrate FMI's smartsymbols, follow these steps:
 
-- Visit the [FMI GitHub repository](https://github.com/fmidev/opendata-resources) to access the weather symbols.
+- Visit the [FMI open data GitHub repository](https://github.com/fmidev/opendata-resources) to access the weather symbols.
 
 - Download the weather symbols provided in the repository and place into symbols folder.
 
