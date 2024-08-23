@@ -159,13 +159,43 @@ fmi.weather = fmi.weather || {};
             .range([height, 0]);
 
         var yPrec = d3.scaleLinear()
-            .domain([0, (d3.max(data, d => d.precipitation1h + 5)) * 4])
+            .domain([0, (d3.max(data, d => d.precipitation1h + 2)) * 2])
             .range([height, 0]);
 
         // X Axis
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
             .call(d3.axisBottom(x));
+
+            function makeXGridlines() {
+                return d3.axisBottom(x)
+                    .ticks(10); // Adjust the number of ticks as needed
+            }
+            
+            function makeYTempGridlines() {
+                return d3.axisLeft(yTemp)
+                    .ticks(10); // Adjust the number of ticks as needed
+            }
+            
+            function makeYPrecGridlines() {
+                return d3.axisRight(yPrec)
+                    .ticks(10); // Adjust the number of ticks as needed
+            }    
+            svg.append("g")
+        .attr("class", "grid")
+        .attr("transform", `translate(0,${height})`)
+        .call(makeXGridlines()
+            .tickSize(-height)
+            .tickFormat("")); // Removes the tick labels
+
+    // Add the Y gridlines for Temperature
+    svg.append("g")
+        .attr("class", "grid")
+        .call(makeYTempGridlines()
+            .tickSize(-width)
+            .tickFormat("")); // Removes the tick labels
+
+    // Add the Y gridlines for Precipitation
 
         // Add Weather Symbols below the x-axis, outside the graph area
         var iconSize = 40; // Size of the icon
@@ -308,6 +338,8 @@ fmi.weather = fmi.weather || {};
         const sector = sectors.find(sector => value >= sector.min && value < sector.max);
         return sector ? sector.label : "unknown";
     };
+    
+    
 
 
 }(fmi.weather.weatherGraph = fmi.weather.weatherGraph || {}));
