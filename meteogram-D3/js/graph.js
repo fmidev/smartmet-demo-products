@@ -212,10 +212,6 @@ fmi.weather = fmi.weather || {};
             });
 
 
-
-
-
-
         // Y Axis for Temperature
         svg.append("g")
             .attr("class", "axisRed")
@@ -254,7 +250,7 @@ fmi.weather = fmi.weather || {};
             .attr("class", "tooltip")
             .style("opacity", 0);
 
-        svg.selectAll(".dot")
+            svg.selectAll(".dot")
             .data(data)
             .enter().append("circle")
             .attr("class", "dot")
@@ -266,14 +262,15 @@ fmi.weather = fmi.weather || {};
                     .duration(200)
                     .style("opacity", .9);
                 tooltip.html(weatherGraph.constructTooltip(d))
-                    .style("left", (event.pageX + 5) + "px")
-                    .style("top", (event.pageY - 28) + "px");
+                    .style("left", (event.pageX + 40) + "px") // Offset slightly to avoid direct overlap
+                    .style("top", (event.pageY - 99) + "px"); // Position tooltip above the cursor
             })
-            .on("mouseout", function (d) {
+            .on("mouseout", function () {
                 tooltip.transition()
                     .duration(500)
                     .style("opacity", 0);
             });
+        
     }
 
 

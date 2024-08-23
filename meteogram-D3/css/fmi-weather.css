@@ -18,16 +18,19 @@
     top: 48px;
 }
 
-.highcharts-tooltip > span {
-    background-color: #fff;
-    border: 1px solid #172F8F;
-    border-radius: 5px;
-    opacity: 1;
-    z-index: 9999 !important;
-    padding: .8em;
-    left: 0 !important;
-    top: 0 !important;
+.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 8px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none; /* Prevents the tooltip from capturing mouse events */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.2s ease-in-out;
 }
+
 .fmi-weather-graph-text {
     font-size: 12px;
     fill: black; /* Ensure text is visible over the icon */
