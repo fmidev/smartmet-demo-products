@@ -1,0 +1,47 @@
+
+/*
+* style settings for meteogram
+*/
+
+.fmi-body {
+    height:100%; 
+    margin: 10px 10px 10px 10px;
+    font-family: 'Roboto, sans-serif';
+    color: #413F43;
+    background-color: white;
+}
+
+.fmi-weather-graph-text {
+    font-size:12px; 
+    position: absolute; 
+    left: 14px; 
+    top: 48px;
+}
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 8px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none; /* Prevents the tooltip from capturing mouse events */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.2s ease-in-out;
+}
+
+.fmi-weather-graph-text {
+    font-size: 12px;
+    fill: black; /* Ensure text is visible over the icon */
+    font-weight: bold;
+}
+.grid line {
+    stroke: lightgrey;
+    stroke-opacity: 0.7;
+    shape-rendering: crispEdges;
+}
+
+.grid path {
+    stroke-width: 0;
+}
