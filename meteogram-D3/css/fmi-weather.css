@@ -45,3 +45,8 @@
 .grid path {
     stroke-width: 0;
 }
+#fmi-weather-graph {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
