@@ -149,6 +149,24 @@ fmi.weather = fmi.weather || {};
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
+        // Title and Subtitle
+        svg.append("text")
+            .attr("x", width / 2)
+            .attr("y", -20) // Position title slightly above the graph area
+            .attr("text-anchor", "middle")
+            .attr("class", "graph-title")
+            .style("font-size", "20px")
+            .style("font-weight", "bold")
+            .text("Example of usage of D3.js with FMI Weather API");
+
+        svg.append("text")
+            .attr("x", width / 2)
+            .attr("y", 0) // Position subtitle just below the title
+            .attr("text-anchor", "middle")
+            .attr("class", "graph-subtitle")
+            .style("font-size", "14px")
+            .text("Weather Forecast for " + locationname);
+
         // Scales
         var x = d3.scaleTime()
             .domain(d3.extent(data, d => d.epochtime))
@@ -167,35 +185,35 @@ fmi.weather = fmi.weather || {};
             .attr("transform", `translate(0,${height})`)
             .call(d3.axisBottom(x));
 
-            function makeXGridlines() {
-                return d3.axisBottom(x)
-                    .ticks(10); // Adjust the number of ticks as needed
-            }
-            
-            function makeYTempGridlines() {
-                return d3.axisLeft(yTemp)
-                    .ticks(10); // Adjust the number of ticks as needed
-            }
-            
-            function makeYPrecGridlines() {
-                return d3.axisRight(yPrec)
-                    .ticks(10); // Adjust the number of ticks as needed
-            }    
-            svg.append("g")
-        .attr("class", "grid")
-        .attr("transform", `translate(0,${height})`)
-        .call(makeXGridlines()
-            .tickSize(-height)
-            .tickFormat("")); // Removes the tick labels
+        function makeXGridlines() {
+            return d3.axisBottom(x)
+                .ticks(10); // Adjust the number of ticks as needed
+        }
 
-    // Add the Y gridlines for Temperature
-    svg.append("g")
-        .attr("class", "grid")
-        .call(makeYTempGridlines()
-            .tickSize(-width)
-            .tickFormat("")); // Removes the tick labels
+        function makeYTempGridlines() {
+            return d3.axisLeft(yTemp)
+                .ticks(10); // Adjust the number of ticks as needed
+        }
 
-    // Add the Y gridlines for Precipitation
+        function makeYPrecGridlines() {
+            return d3.axisRight(yPrec)
+                .ticks(10); // Adjust the number of ticks as needed
+        }
+        svg.append("g")
+            .attr("class", "grid")
+            .attr("transform", `translate(0,${height})`)
+            .call(makeXGridlines()
+                .tickSize(-height)
+                .tickFormat("")); // Removes the tick labels
+
+        // Add the Y gridlines for Temperature
+        svg.append("g")
+            .attr("class", "grid")
+            .call(makeYTempGridlines()
+                .tickSize(-width)
+                .tickFormat("")); // Removes the tick labels
+
+        // Add the Y gridlines for Precipitation
 
         // Add Weather Symbols below the x-axis, outside the graph area
         var iconSize = 40; // Size of the icon
@@ -280,7 +298,7 @@ fmi.weather = fmi.weather || {};
             .attr("class", "tooltip")
             .style("opacity", 0);
 
-            svg.selectAll(".dot")
+        svg.selectAll(".dot")
             .data(data)
             .enter().append("circle")
             .attr("class", "dot")
@@ -300,7 +318,7 @@ fmi.weather = fmi.weather || {};
                     .duration(500)
                     .style("opacity", 0);
             });
-        
+
     }
 
 
@@ -338,8 +356,8 @@ fmi.weather = fmi.weather || {};
         const sector = sectors.find(sector => value >= sector.min && value < sector.max);
         return sector ? sector.label : "unknown";
     };
-    
-    
+
+
 
 
 }(fmi.weather.weatherGraph = fmi.weather.weatherGraph || {}));
