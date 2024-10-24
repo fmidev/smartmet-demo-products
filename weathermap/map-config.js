@@ -18,7 +18,7 @@ var mapconfigurations = {
     'ECMWF 2m Temperature': 'fmi:harmonie:temperature', // fmi:gfs:sfc:temperature || fmi:ecmwf:rawtemperature
   },
   wmsOpacity: '0.8',
-  wmsTileSize: 2048,
+  wmsTileSize: 256,
   layerOptions: {
     attribution: 'Finnish Meteorological institute',
     opacity: '0.5',
