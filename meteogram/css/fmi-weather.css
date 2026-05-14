@@ -1,0 +1,104 @@
+/*
+ * Meteogram styling — Highcharts version
+ */
+
+:root {
+    --color-bg: #ffffff;
+    --color-surface: #f8f9fb;
+    --color-border: #e3e6ec;
+    --color-text: #2a2d33;
+    --color-muted: #6b7180;
+    --color-temp: #e85a5a;
+    --color-temp-cold: #2f80ed;
+    --color-rain: #1f5fd1;
+    --color-error: #b00020;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.fmi-body {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 16px;
+    background: var(--color-bg);
+}
+
+.forecast-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: var(--color-muted);
+}
+
+.forecast-picker select {
+    padding: 6px 28px 6px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-surface);
+    font: inherit;
+    color: var(--color-text);
+    cursor: pointer;
+}
+
+.forecast-picker select:focus {
+    outline: 2px solid var(--color-temp);
+    outline-offset: 1px;
+}
+
+.forecast-chart {
+    width: 100%;
+    min-height: 380px;
+}
+
+.forecast-message {
+    min-height: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--color-muted);
+    padding: 6px 0;
+}
+
+.forecast-message[data-kind="error"] {
+    color: var(--color-error);
+    font-weight: 600;
+}
+
+.wind-cell {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+}
+
+.fmi-weather-graph-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text);
+    pointer-events: none;
+}
+
+.highcharts-tooltip > span {
+    background-color: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    opacity: 1;
+    z-index: 9999 !important;
+    padding: 10px 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    font-size: 13px;
+    line-height: 1.45;
+}

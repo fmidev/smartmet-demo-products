@@ -1,0 +1,189 @@
+/*
+ * Meteogram styling — D3 version
+ */
+
+:root {
+    --color-bg: #ffffff;
+    --color-surface: #f8f9fb;
+    --color-border: #e3e6ec;
+    --color-text: #2a2d33;
+    --color-muted: #6b7180;
+    --color-temp: #e85a5a;
+    --color-temp-cold: #2f80ed;
+    --color-rain: #1f5fd1;
+    --color-grid: #eef0f4;
+    --color-error: #b00020;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.fmi-body {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 16px;
+    background: var(--color-bg);
+}
+
+.forecast-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: var(--color-muted);
+}
+
+.forecast-picker select {
+    padding: 6px 28px 6px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-surface);
+    font: inherit;
+    color: var(--color-text);
+    cursor: pointer;
+}
+
+.forecast-picker select:focus {
+    outline: 2px solid var(--color-temp);
+    outline-offset: 1px;
+}
+
+#fmi-weather-graph {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+
+#fmi-weather-graph svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.forecast-message {
+    min-height: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--color-muted);
+    padding: 6px 0;
+}
+
+.forecast-message[data-kind="error"] {
+    color: var(--color-error);
+    font-weight: 600;
+}
+
+/* Graph internals */
+
+.graph-title {
+    font-size: 18px;
+    font-weight: 600;
+    fill: var(--color-text);
+}
+
+.graph-subtitle {
+    font-size: 12px;
+    fill: var(--color-muted);
+}
+
+.axis text {
+    font-size: 12px;
+    fill: var(--color-muted);
+}
+
+.axis-temp text { fill: var(--color-temp); }
+.axis-prec text { fill: var(--color-rain); }
+
+.axis path,
+.axis line {
+    stroke: var(--color-border);
+}
+
+.grid line {
+    stroke: var(--color-grid);
+    stroke-opacity: 1;
+    shape-rendering: crispEdges;
+}
+
+.grid path {
+    stroke-width: 0;
+}
+
+.day-band {
+    fill: #f7f8fa;
+}
+
+.day-band.alt {
+    fill: #eef0f4;
+}
+
+.temp-line {
+    fill: none;
+    stroke: var(--color-temp);
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.prec-bar {
+    fill: var(--color-rain);
+}
+
+.dot {
+    fill: transparent;
+    cursor: pointer;
+}
+
+.hover-line {
+    stroke: var(--color-muted);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.fmi-weather-graph-text {
+    font-size: 11px;
+    fill: var(--color-text);
+    font-weight: 600;
+}
+
+.legend text {
+    font-size: 12px;
+    fill: var(--color-text);
+}
+
+.tooltip {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--color-text);
+    min-width: 180px;
+    z-index: 1000;
+}
+
+.tooltip .tt-time {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.tooltip .tt-symbol {
+    color: var(--color-muted);
+    margin-top: 4px;
+}
